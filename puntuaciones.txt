@@ -1,0 +1,9 @@
+Facundo - 5
+dddGege - 4
+Betti - 6
+Rolando - 3
+Dada - 14
+Sfafa - 21
+& c:/python311/python.exe c:/users/facu/desktop/pygame_space_invaders/game.py - 17
+Roberto - 18
+Fadf - 1
