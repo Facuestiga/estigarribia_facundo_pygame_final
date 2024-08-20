@@ -10,10 +10,15 @@ class Player():
         self.velocidad = 10
         self.color = "red"
         self.rect = pygame.Rect(self.x, self.y, self.ancho, self.alto)
+        self.imagen = pygame.image.load(r"assets\player_ship\blue_ship.png")
+        self.imagen = pygame.transform.scale(self.imagen, (self.ancho, self.alto))
+        self.imagen = pygame.transform.rotate(self.imagen, 90)
+        
     
     def dibujar(self, ventana):
         self.rect = pygame.Rect(self.x, self.y, self.ancho, self.alto)
-        pygame.draw.rect(ventana, self.color, self.rect)
+        #pygame.draw.rect(ventana, self.color, self.rect)
+        ventana.blit(self.imagen, (self.x, self.y))
         
     def movimiento(self, teclas, ancho_ventana,  balas, ultima_bala, tiempo_entre_balas):
         if teclas[pygame.K_a] and self.x > 0:

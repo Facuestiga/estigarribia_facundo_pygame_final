@@ -7,3 +7,9 @@ Sfafa - 21
 & c:/python311/python.exe c:/users/facu/desktop/pygame_space_invaders/game.py - 17
 Roberto - 18
 Fadf - 1
+Facundo - 10
+& c:/python311/python.exe c:/users/facu/desktop/pygame_space_invaders/game.py - 210
+Genaro - 20
+& c:/python311/python.exe c:/users/facu/desktop/pygame_space_invaders/game.py - 43
+& c:/python311/python.exe c:/users/facu/desktop/pygame_space_invaders/game.py - 20
+Dasd - 14
