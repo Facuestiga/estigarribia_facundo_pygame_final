@@ -1,6 +1,7 @@
 import pygame
 from personaje import Player
 from enemigo import Enemigo
+from pausa_menu import PausaMenu
 from constants import *
 import random
 
@@ -28,6 +29,12 @@ class Game:
 
     def gestionar_teclas(self, teclas):
         self.ultima_bala = self.player.movimiento(teclas, ANCHO, self.balas, self.ultima_bala, self.tiempo_entre_balas)
+        if teclas[pygame.K_p]:
+            self.mostrar_pausa()
+
+    def mostrar_pausa(self):
+        pausa_menu = PausaMenu(VENTANA, ANCHO, ALTO)
+        pausa_menu.iniciar(self)
 
     def verificar_nivel(self):
         if self.nivel == 1:
@@ -127,4 +134,21 @@ class Game:
             return  # Salimos de la función para evitar que se intente actualizar la pantalla después de cerrar
 
         pygame.quit()
+    
+    def reiniciar(self):
+        self.nivel = 1
+        self.vida = 3   
+        self.puntos = 0
+        self.enemigos_derrotados = 0
+
+        self.tiempo_pasado = 0
+        self.jugando = True
+
+        self.player = Player(ANCHO / 2, ALTO - 65)
+        self.enemigos = []
+        self.balas = []
+        self.ultima_bala = 0
+        self.balas_enemigas = []
+
+        SONIDO_GAME_OVER.stop()
 

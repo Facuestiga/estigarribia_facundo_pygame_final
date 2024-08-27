@@ -1,0 +1,42 @@
+import sys
+import pygame
+
+
+class PausaMenu:
+    def __init__(self, ventana, ancho, alto):
+        self.ventana = ventana
+        self.ancho = ancho
+        self.alto = alto
+        self.reloj = pygame.time.Clock()
+
+    def dibujar_boton(self, texto, pos):
+        fuente = pygame.font.Font(None, 74)
+        texto_render = fuente.render(texto, True, "white")
+        texto_rect = texto_render.get_rect(center=pos)
+        self.ventana.blit(texto_render, texto_rect)
+        return texto_rect
+
+    def iniciar(self, game):
+        while True:
+            self.ventana.fill((0, 0, 0))
+
+            reanudar_boton = self.dibujar_boton("Renaudar", (self.ancho // 2, 250))
+            reiniciar_boton = self.dibujar_boton("Reiniciar", (self.ancho // 2, 350))
+            salir_boton = self.dibujar_boton("Salir del Juego", (self.ancho // 2, 450))
+
+            for evento in pygame.event.get():
+                if evento.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if evento.type == pygame.MOUSEBUTTONDOWN:
+                    if reanudar_boton.collidepoint(evento.pos):
+                        return  # Salir del menú de pausa y continuar el juego
+                    if reiniciar_boton.collidepoint(evento.pos):
+                        game.reiniciar()
+                        return
+                    if salir_boton.collidepoint(evento.pos):
+                        pygame.quit()
+                        sys.exit()
+
+            pygame.display.update()
+            self.reloj.tick(60)

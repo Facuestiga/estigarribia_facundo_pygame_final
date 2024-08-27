@@ -24,3 +24,13 @@ class Enemigo():
         
     def movimiento(self):
         self.y += self.velocidad
+        self.rect.y = self.y
+    
+    def disparar(self, balas):
+        ahora = pygame.time.get_ticks()
+        if ahora - self.ultima_bala > self.tiempo_entre_balas:
+            # Dispara una bala desde el centro inferior del rectángulo del enemigo
+            bala = Bala(self.rect.centerx, self.rect.bottom, velocidad_y=8)
+            balas.append(bala)
+            bala.movimiento(is_enemy=True)
+            self.ultima_bala = ahora
