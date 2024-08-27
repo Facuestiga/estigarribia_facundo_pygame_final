@@ -19,7 +19,7 @@ class Bala():
         ventana.blit(self.imagen, (self.x, self.y))
         
     def movimiento(self, is_enemy=False):
-        if not is_enemy:    
+        if not is_enemy and self.enemy_shoot == False:    
             self.y -= self.velocidad_y
             self.rect.y = self.y
             self.enemy_shoot = False
