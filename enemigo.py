@@ -1,4 +1,6 @@
 import pygame
+import random
+from bala import Bala
 
 class Enemigo():
     def __init__(self, x, y):
@@ -12,6 +14,8 @@ class Enemigo():
         self.imagen = pygame.image.load(r"assets\enemy\enemy_androide.png")
         self.imagen = pygame.transform.scale(self.imagen, (self.ancho, self.alto))
         self.imagen = self.imagen.convert_alpha()
+        self.ultima_bala = pygame.time.get_ticks()
+        self.tiempo_entre_balas = random.randint(1000, 3000)
     
     def dibujar(self, ventana):
         self.rect = pygame.Rect(self.x, self.y, self.ancho, self.alto)
@@ -20,3 +24,13 @@ class Enemigo():
         
     def movimiento(self):
         self.y += self.velocidad
+        self.rect.y = self.y
+    
+    def disparar(self, balas):
+        ahora = pygame.time.get_ticks()
+        if ahora - self.ultima_bala > self.tiempo_entre_balas:
+            # Dispara una bala desde el centro inferior del rectángulo del enemigo
+            bala = Bala(self.rect.centerx, self.rect.bottom, velocidad_y=8)
+            balas.append(bala)
+            bala.movimiento(is_enemy=True)
+            self.ultima_bala = ahora
