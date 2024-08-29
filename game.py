@@ -2,10 +2,11 @@ import pygame
 from personaje import Player
 from enemigo import Enemigo
 from pausa_menu import PausaMenu
+from puntuaciones import Puntuaciones
 from constants import *
 import random
 
-class Game:
+class Game():
     def __init__(self):
         pygame.init()
         pygame.mixer.init()
@@ -35,6 +36,11 @@ class Game:
     def mostrar_pausa(self):
         pausa_menu = PausaMenu(VENTANA, ANCHO, ALTO)
         pausa_menu.iniciar(self)
+    
+    def mostrar_menu_principal():
+        from main_menu import MainMenu
+        menu_principal = MainMenu(VENTANA, ANCHO, ALTO) 
+        menu_principal.iniciar()
 
     def verificar_nivel(self):
         if self.nivel == 1:
@@ -98,6 +104,8 @@ class Game:
             if pygame.Rect.colliderect(self.player.rect, bala_enemiga.rect):
                 self.vida -= 1
                 self.balas_enemigas.remove(bala_enemiga)
+                if self.vida > 0: 
+                    SONIDO_COLISION_BALA_ENEMIGA_PLAYER.play()
         
         texto_vida = FUENTE.render(f"Vidas: {self.vida}", True, "white")
         texto_puntos = FUENTE.render(f"Puntos: {self.puntos}", True, "white")
@@ -128,12 +136,20 @@ class Game:
             SONIDO_GAME_OVER.play()
             while pygame.mixer.get_busy():
                 pygame.time.delay(100)
+                
+            nombre_jugador = self.obtener_nombre_jugador()
+            print(f"Gracias por jugar {nombre_jugador}.\nAdios!")
+            
+            
+            Puntuaciones.guardar_puntuacion(nombre_jugador, self.puntos)
             
             # Aquí cerramos el juego después de que el sonido termine.
             pygame.quit()
             return  # Salimos de la función para evitar que se intente actualizar la pantalla después de cerrar
 
         pygame.quit()
+        
+        
     
     def reiniciar(self):
         self.nivel = 1
@@ -152,3 +168,18 @@ class Game:
 
         SONIDO_GAME_OVER.stop()
 
+
+    def obtener_nombre_jugador(self):
+        nombre = input("Ingresa tu nombre: ")
+        return nombre
+    
+   
+
+
+# nombre = input("Ingresa tu nombre: ")
+
+# with open('puntuaciones.txt', 'a') as archivo:
+#     nombre = nombre.lower()
+#     nombre = nombre.capitalize()
+#     archivo.write(f"{nombre} - {puntos}\n")
+#quit()
