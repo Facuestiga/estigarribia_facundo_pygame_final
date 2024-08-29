@@ -1,7 +1,7 @@
 import sys
 import pygame
 
-
+pygame.init()
 class PausaMenu:
     def __init__(self, ventana, ancho, alto):
         self.ventana = ventana
@@ -22,7 +22,8 @@ class PausaMenu:
 
             reanudar_boton = self.dibujar_boton("Renaudar", (self.ancho // 2, 250))
             reiniciar_boton = self.dibujar_boton("Reiniciar", (self.ancho // 2, 350))
-            salir_boton = self.dibujar_boton("Salir del Juego", (self.ancho // 2, 450))
+            volver_main_menu = self.dibujar_boton("Volver al menu principal", (self.ancho // 2, 450))
+            salir_boton = self.dibujar_boton("Salir del Juego", (self.ancho // 2, 550))
 
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
@@ -34,6 +35,8 @@ class PausaMenu:
                     if reiniciar_boton.collidepoint(evento.pos):
                         game.reiniciar()
                         return
+                    if volver_main_menu.collidepoint(evento.pos):
+                        game.mostrar_menu_principal()
                     if salir_boton.collidepoint(evento.pos):
                         pygame.quit()
                         sys.exit()

@@ -1,4 +1,5 @@
 import pygame
+import json
 import sys
 
 class Puntuaciones:
@@ -15,11 +16,11 @@ class Puntuaciones:
         while True:
             self.ventana.fill((0, 0, 0))
 
-            with open('puntuaciones.txt', 'r') as archivo:
-                puntuaciones = archivo.readlines()
+            with open('puntuaciones.json', 'r') as archivo:
+                puntuaciones = json.load(archivo)
 
             for i, puntuacion in enumerate(puntuaciones):
-                texto = self.fuente.render(puntuacion.strip(), True, (255, 255, 255))
+                texto = self.fuente.render(f"{puntuacion['nombre']}: {puntuacion['puntos']}", True, (255, 255, 255))
                 self.ventana.blit(texto, (50, 50 + i * 50))
 
             for evento in pygame.event.get():
@@ -32,3 +33,16 @@ class Puntuaciones:
 
             pygame.display.update()
             self.reloj.tick(60)
+
+    @staticmethod
+    def guardar_puntuacion(nombre, puntos):
+        try:
+            with open('puntuaciones.json', 'r') as archivo:
+                puntuaciones = json.load(archivo)
+        except FileNotFoundError:
+            puntuaciones = []
+
+        puntuaciones.append({"nombre": nombre, "puntos": puntos})
+
+        with open('puntuaciones.json', 'w') as archivo:
+            json.dump(puntuaciones, archivo, indent=4)
