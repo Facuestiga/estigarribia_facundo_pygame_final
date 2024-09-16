@@ -1,10 +1,12 @@
-from main_menu import MainMenu
-from constants import ANCHO, ALTO
-import pygame
-
+from constants import ALTO, ANCHO
 if __name__ == "__main__":
-    menu = MainMenu(ANCHO, ALTO )
-    menu.iniciar()
+    import pygame
+    from main_menu import MainMenu
+    pygame.init()
+    ventana = pygame.display.set_mode((ANCHO, ALTO))
     
-    if pygame.get_init():
-        pygame.display.update()
+    menu = MainMenu( ANCHO, ALTO)
+    menu.iniciar()
+
+    pygame.quit()
+

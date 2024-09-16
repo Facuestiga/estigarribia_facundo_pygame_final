@@ -10,7 +10,7 @@ class Player():
         self.velocidad = 10
         self.color = "red"
         self.rect = pygame.Rect(self.x, self.y, self.ancho, self.alto)
-        self.imagen = pygame.image.load(r"assets\player_ship\blue_ship.png")
+        self.imagen = pygame.image.load(r"assets\player_ship\nave.png")
         self.imagen = pygame.transform.scale(self.imagen, (self.ancho, self.alto))
         self.imagen = pygame.transform.rotate(self.imagen, 90)
         

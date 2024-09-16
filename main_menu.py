@@ -9,7 +9,7 @@ class MainMenu:
         self.ancho = ancho
         self.alto = alto
         self.ventana = pygame.display.set_mode((self.ancho, self.alto))
-        pygame.display.set_caption("Main Menu")
+        pygame.display.set_caption("Space Invaders")
         self.reloj = pygame.time.Clock()
         self.menu_activo = True  # Flag para controlar el bucle del menú
 

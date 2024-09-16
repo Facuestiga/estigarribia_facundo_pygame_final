@@ -4,6 +4,7 @@ import pygame
 pygame.init()
 class PausaMenu:
     def __init__(self, ventana, ancho, alto):
+        pygame.display.set_caption("Space Invaders - Pausa")
         self.ventana = ventana
         self.ancho = ancho
         self.alto = alto
