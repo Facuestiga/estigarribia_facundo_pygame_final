@@ -8,10 +8,13 @@ class Puntuaciones:
         self.ancho = ancho
         self.alto = alto
         self.ventana = pygame.display.set_mode((self.ancho, self.alto))
-        pygame.display.set_caption("Space Invaders - Puntuaciones")
+        pygame.display.set_caption("Space Invaders")
         self.fuente = pygame.font.SysFont("Comic Sans", 40)
         self.reloj = pygame.time.Clock()
 
+    """ 
+    Brief: funcion que muestra las puntuaciones por pantalla tomadas desde archivo .json
+    """
     def mostrar(self):
         while True:
             self.ventana.fill((0, 0, 0))

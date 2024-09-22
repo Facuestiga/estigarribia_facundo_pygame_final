@@ -47,34 +47,48 @@ class Game():
     
     def mostrar_menu_principal(self):
         from main_menu import MainMenu
-        MAIN_MUSIC.play(-1)
-        menu_principal = MainMenu(ANCHO, ALTO) 
+        menu_principal = MainMenu(VENTANA,ANCHO, ALTO) 
         menu_principal.iniciar()
 
+    """
+    Brief: funcion que verifica el nivel en el se encuentra el juegos y crea una instancia del Jefe
+        segun los parametros deseados. El jugador no puede sumar puntos si el Jefe esta activo.
+        Los enemigos derrotados son reinicializados a 0 hasta pasar al siguiente nivel
+    """
     def verificar_nivel(self):
         if self.nivel == 1 and not self.jefe:
             if self.enemigos_derrotados >= 2:
-                self.jefe = Jefe(ANCHO // 2 - 25, 60, vida=2, velocidad_x=5)
+                self.jefe = Jefe(ANCHO // 2 - 25, 60, vida=1, velocidad_x=5)
                 self.suma_puntos = False
                 self.enemigos_derrotados = 0
         
         elif self.nivel == 2 and not self.jefe:
             if self.enemigos_derrotados >= 5:
-                self.jefe = Jefe(ANCHO // 2 - 25, 60, vida=3, velocidad_x=7)
+                self.jefe = Jefe(ANCHO // 2 - 25, 60, vida=1, velocidad_x=7)
                 self.suma_puntos = False
                 self.enemigos_derrotados = 0;
         
         elif self.nivel == 3 and not self.jefe:
             if self.enemigos_derrotados >= 8:
-                self.jefe = Jefe(ANCHO // 2 - 25, 60, vida=5, velocidad_x=10) 
+                self.jefe = Jefe(ANCHO // 2 - 25, 60, vida=1, velocidad_x=10) 
                 self.suma_puntos = False
                 self.enemigos_derrotados = 0
 
+    """ 
+    Brief: funcion que se encarga de spawnear a los enemigos en una posicion random.
+        Spawnean entre los valores del ancho de la pantalla y -100 pixeles por encima del alto de la pantalla
+    """
     def spawn_enemigo(self):
         enemigo_x = random.randint(0, ANCHO - 50)
         self.enemigos.append(Enemigo(enemigo_x, -100))
         self.tiempo_pasado = 50
 
+    """
+    Brief: function que actualiza para el juego esta corriendo.
+    Actualiza dentro de la pantalla los enemgios, colision con el jugador,
+    suma de puntos, actualiza al jefe si esta vivo, colisiones de balas enemigas con jugador y viceversa,
+    
+    """
     def actualizar_pantalla(self):
         VENTANA.fill("black")
         self.player.dibujar(VENTANA)
@@ -121,16 +135,17 @@ class Game():
             
         
             for bala in self.balas:
-                if pygame.Rect.colliderect(bala.rect, self.jefe.rect):
-                    self.jefe.recibir_impacto()
-                    self.balas.remove(bala)
-                    if not self.jefe.esta_vivo():
-                        self.suma_puntos = True
-                        self.jefe = None  # Eliminar al jefe
-                        self.nivel += 1
-                        if self.nivel == 2:
-                            self.vida = min(self.vida + 2, 3) 
-                        print(f"¡Has derrotado al jefe del nivel {self.nivel - 1}!")
+                if self.jefe is not None:
+                    if pygame.Rect.colliderect(bala.rect, self.jefe.rect):
+                        self.jefe.recibir_impacto()
+                        self.balas.remove(bala)
+                        if not self.jefe.esta_vivo():
+                            self.suma_puntos = True
+                            self.jefe = None  # eliminar al jefe
+                            self.nivel += 1
+                            if self.nivel == 3:
+                                self.vida = min(self.vida + 2, 3) 
+                            print(f"¡Has derrotado al jefe del nivel {self.nivel - 1}!")
         
         for bala in self.balas:
             bala.dibujar(VENTANA)
@@ -154,6 +169,12 @@ class Game():
         VENTANA.blit(texto_puntos, (20, 60))
         pygame.display.update()
 
+
+    """ 
+    Brief. funcion que se encarga de correr el juego mientra el jugador este jugando y la vida sea mayor a 0.
+    Se encarga de spawnear a los enemigos, gestionar las teclas, actualizar la pantalla, verifica el nivel,
+    y finalizar la partida si la vida es igual a 0
+    """
     def run(self):
         while self.jugando and self.vida > 0:
             self.tiempo_pasado += self.reloj.tick(FPS)
@@ -181,8 +202,11 @@ class Game():
             self.game_over()
         
         
-    
+    """ 
+    Brief: funcion que reinicia los valores del juego.
+    """
     def reiniciar(self):
+        pygame.display.set_caption("Space Invaders - F.Estigarribia")
         self.nivel = 1
         self.vida = 3   
         self.puntos = 0
@@ -212,11 +236,8 @@ class Game():
         Puntuaciones.guardar_puntuacion(nombre, self.puntos)
         self.jugando = False
         self.mostrar_menu_principal()
-    
-    def mostrar_menu_principal(self):
-        from main_menu import MainMenu
-        menu_principal = MainMenu(ANCHO, ALTO)
-        menu_principal.iniciar()
+
+
 
 # nombre = input("Ingresa tu nombre: ")
 

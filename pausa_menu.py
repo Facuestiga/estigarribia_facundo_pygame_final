@@ -4,12 +4,17 @@ import pygame
 pygame.init()
 class PausaMenu:
     def __init__(self, ventana, ancho, alto):
-        pygame.display.set_caption("Space Invaders - Pausa")
+        pygame.display.set_caption("Space Invaders")
         self.ventana = ventana
         self.ancho = ancho
         self.alto = alto
         self.reloj = pygame.time.Clock()
 
+    """ 
+    Brief: funcion que dibuja un boton en el menu de pausa
+    Param: texto (texto a mostrar en el boton), pos(posicion donde dibujar el boton)
+    Return: retorna el rectangulo del boton    
+    """
     def dibujar_boton(self, texto, pos):
         fuente = pygame.font.Font(None, 74)
         texto_render = fuente.render(texto, True, "white")
@@ -32,7 +37,7 @@ class PausaMenu:
                     sys.exit()
                 if evento.type == pygame.MOUSEBUTTONDOWN:
                     if reanudar_boton.collidepoint(evento.pos):
-                        return  # Salir del menú de pausa y continuar el juego
+                        return  
                     if reiniciar_boton.collidepoint(evento.pos):
                         game.reiniciar()
                         return
