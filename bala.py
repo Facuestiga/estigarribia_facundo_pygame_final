@@ -13,11 +13,20 @@ class Bala():
         self.imagen = pygame.image.load(r"assets\bullet\bullet.png")
         self.imagen = pygame.transform.scale(self.imagen, (self.ancho, self.alto))
     
+    """ 
+    Brief: funcion que dibuja la bala en la pantalla
+    Param: ventana(la ventana en donde se dibujara la bala)
+    """
     def dibujar(self, ventana):
         self.rect = pygame.Rect(self.x, self.y, self.ancho, self.alto)
         #pygame.draw.rect(ventana, self.color, self.rect)
         ventana.blit(self.imagen, (self.x, self.y))
         
+    """ 
+    Brief: funcion que realiza el movimiento. Aumenta en el eje y si la bala es lanzada desde el enemgio.
+    Disminuye en el eje y  si la bala es lanzada por el jugador.
+    Param: is_enemy: bool (indica si la bala es dispara por el enemigo)
+    """
     def movimiento(self, is_enemy=False):
         if not is_enemy and self.enemy_shoot == False:    
             self.y -= self.velocidad_y

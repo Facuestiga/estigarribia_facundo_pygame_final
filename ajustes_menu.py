@@ -6,7 +6,7 @@ class AjustesMenu:
         self.ancho = ancho
         self.alto = alto
         self.ventana = pygame.display.set_mode((self.ancho, self.alto))
-        pygame.display.set_caption("Ajustes")
+        pygame.display.set_caption("Space Invaders - Ajustes")
         self.volumen = pygame.mixer.music.get_volume() * 100  
         self.reloj = pygame.time.Clock()
         self.ajustes_activo = True
@@ -16,7 +16,12 @@ class AjustesMenu:
         pygame.draw.rect(self.ventana, "White", (self.ancho // 4, self.alto // 2 - 20, self.ancho // 2, 40), 2)
         pygame.draw.rect(self.ventana, "Green", (self.ancho // 4, self.alto // 2 - 20, (self.ancho // 2) * (volumen / 100), 40))
 
-    def dibujar_texto(self, texto, pos):
+    """ 
+    Brief: funcion que dibuja un boton en el menu de ajustes
+    Param: texto (texto a mostrar en el boton), pos(posicion donde dibujar el boton)
+    Return: retorna el rectangulo del boton    
+    """
+    def dibujar_boton(self, texto, pos):
         fuente = pygame.font.SysFont("Arial", 40)
         superficie_texto = fuente.render(texto, True, "White")
         rect_texto = superficie_texto.get_rect(center=pos)
@@ -30,8 +35,8 @@ class AjustesMenu:
     def iniciar(self):
         while self.ajustes_activo:
             self.ventana.fill((0, 0, 0))
-            self.dibujar_texto("Ajustes", (self.ancho // 2, 100))
-            self.dibujar_texto(f"Volumen: {int(self.volumen)}%", (self.ancho // 2, self.alto // 2 - 60))
+            self.dibujar_boton("Ajustes", (self.ancho // 2, 100))
+            self.dibujar_boton(f"Volumen: {int(self.volumen)}%", (self.ancho // 2, self.alto // 2 - 60))
             self.dibujar_slider(self.volumen)
 
             for evento in pygame.event.get():
