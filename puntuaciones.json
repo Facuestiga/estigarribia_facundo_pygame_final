@@ -1,82 +1,18 @@
 [
     {
-        "nombre": "facundo",
+        "nombre": "lk",
+        "puntos": 35
+    },
+    {
+        "nombre": "as",
         "puntos": 2
     },
     {
-        "nombre": "asd",
-        "puntos": 2
-    },
-    {
-        "nombre": "dfs",
-        "puntos": 2
-    },
-    {
-        "nombre": "fds",
-        "puntos": 6
-    },
-    {
-        "nombre": "xd",
-        "puntos": 37
-    },
-    {
-        "nombre": "kjk",
-        "puntos": 3
-    },
-    {
-        "nombre": "kok",
-        "puntos": 18
-    },
-    {
-        "nombre": "pepe",
-        "puntos": 4
-    },
-    {
-        "nombre": "paqa",
+        "nombre": "lka",
         "puntos": 1
     },
     {
-        "nombre": "adfa",
-        "puntos": 10
-    },
-    {
-        "nombre": "lplp",
-        "puntos": 1
-    },
-    {
-        "nombre": "asad",
-        "puntos": 1
-    },
-    {
-        "nombre": "darius",
-        "puntos": 9
-    },
-    {
-        "nombre": "tame",
+        "nombre": "asda",
         "puntos": 5
-    },
-    {
-        "nombre": "pala",
-        "puntos": 5
-    },
-    {
-        "nombre": "p",
-        "puntos": 1
-    },
-    {
-        "nombre": "a",
-        "puntos": 2
-    },
-    {
-        "nombre": "pipo",
-        "puntos": 18
-    },
-    {
-        "nombre": "lala",
-        "puntos": 17
-    },
-    {
-        "nombre": "asd",
-        "puntos": 37
     }
 ]

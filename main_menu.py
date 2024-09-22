@@ -2,16 +2,17 @@ import sys
 import pygame
 from game import Game
 from puntuaciones import Puntuaciones
+from ajustes_menu import AjustesMenu
 
 class MainMenu:
     def __init__(self, ancho, alto):
-        pygame.init()
+        #pygame.init()
         self.ancho = ancho
         self.alto = alto
         self.ventana = pygame.display.set_mode((self.ancho, self.alto))
         pygame.display.set_caption("Space Invaders")
         self.reloj = pygame.time.Clock()
-        self.menu_activo = True  # Flag para controlar el bucle del menú
+        self.menu_activo = True  # controla el bucle del menú
 
     def dibujar_boton(self, texto, pos):
         fuente = pygame.font.SysFont("Arial", 50)
@@ -21,9 +22,8 @@ class MainMenu:
         return rect_texto
 
     def iniciar(self):
-        while self.menu_activo:
+        while self.menu_activo: 
             self.ventana.fill((0, 0, 0))
-
             jugar_boton = self.dibujar_boton("Jugar", (self.ancho // 2, 250))
             ajustes_boton = self.dibujar_boton("Ajustes", (self.ancho // 2, 350))
             puntuaciones_boton = self.dibujar_boton("Puntuaciones", (self.ancho // 2, 450))
@@ -39,11 +39,11 @@ class MainMenu:
                     if jugar_boton.collidepoint(evento.pos):
                         game = Game()
                         game.run()
-                        if not pygame.get_init():  # Verifica si Pygame sigue inicializado
+                        if not pygame.get_init():  # verifica si Pygame sigue inicializado
                             self.menu_activo = False
                             break
                     if ajustes_boton.collidepoint(evento.pos):
-                        pass  # Aquí se implementarán los ajustes en el futuro
+                        self.mostrar_ajustes()
                     if puntuaciones_boton.collidepoint(evento.pos):
                         puntuaciones = Puntuaciones(self.ancho, self.alto)
                         puntuaciones.mostrar()
@@ -55,6 +55,10 @@ class MainMenu:
             if self.menu_activo:
                 pygame.display.update()
                 self.reloj.tick(60)
+    
+    def mostrar_ajustes(self):
+        ajustes_menu = AjustesMenu(self.ancho, self.alto)
+        ajustes_menu.iniciar()
 
 
     

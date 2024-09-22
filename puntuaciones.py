@@ -18,8 +18,10 @@ class Puntuaciones:
 
             with open('puntuaciones.json', 'r') as archivo:
                 puntuaciones = json.load(archivo)
+                
+            puntuaciones_ordenadas = sorted(puntuaciones, key=lambda x: x['puntos'], reverse=True)
 
-            for i, puntuacion in enumerate(puntuaciones):
+            for i, puntuacion in enumerate(puntuaciones_ordenadas):
                 texto = self.fuente.render(f"{puntuacion['nombre']}: {puntuacion['puntos']}", True, (255, 255, 255))
                 self.ventana.blit(texto, (50, 50 + i * 50))
 

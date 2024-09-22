@@ -32,6 +32,9 @@ class Game():
         self.jefe_derrotado = False
         self.balas_enemigas_jefe = []
         self.suma_puntos = True
+        self.volumen = 0.5  # volumen inicial
+        pygame.mixer.music.set_volume(self.volumen) 
+
 
     def gestionar_teclas(self, teclas):
         self.ultima_bala = self.player.movimiento(teclas, ANCHO, self.balas, self.ultima_bala, self.tiempo_entre_balas)
@@ -44,6 +47,7 @@ class Game():
     
     def mostrar_menu_principal(self):
         from main_menu import MainMenu
+        MAIN_MUSIC.play(-1)
         menu_principal = MainMenu(ANCHO, ALTO) 
         menu_principal.iniciar()
 
