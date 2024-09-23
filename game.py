@@ -194,6 +194,7 @@ class Game():
 
             if pygame.Rect.colliderect(self.player.rect, item.rect):
                 if self.vida != 3:
+                    SONIDO_COLISION_VIDA_ITEM.play()
                     self.vida += 1
                 self.items.remove(item)
                 
