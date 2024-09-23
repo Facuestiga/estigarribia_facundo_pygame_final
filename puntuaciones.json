@@ -2,5 +2,17 @@
     {
         "nombre": "pla",
         "puntos": 3
+    },
+    {
+        "nombre": "facu",
+        "puntos": 7
+    },
+    {
+        "nombre": "\u001b\u001b\u001b\u001b\u001b\u001b\u001b",
+        "puntos": 7
+    },
+    {
+        "nombre": "lala",
+        "puntos": 2
     }
 ]

@@ -10,8 +10,11 @@ class AjustesMenu:
         self.volumen = pygame.mixer.music.get_volume() * 100  
         self.reloj = pygame.time.Clock()
         self.ajustes_activo = True
-        self.arrastrando_slider = False  # controlar el arrastre del slider
+        self.arrastrando_slider = False  
 
+    """
+    Brief: funcion que dibuja el slider para el seteo del volumen de la musica
+    """
     def dibujar_slider(self, volumen):
         pygame.draw.rect(self.ventana, "White", (self.ancho // 4, self.alto // 2 - 20, self.ancho // 2, 40), 2)
         pygame.draw.rect(self.ventana, "Green", (self.ancho // 4, self.alto // 2 - 20, (self.ancho // 2) * (volumen / 100), 40))
@@ -27,6 +30,10 @@ class AjustesMenu:
         rect_texto = superficie_texto.get_rect(center=pos)
         self.ventana.blit(superficie_texto, rect_texto)
 
+
+    """
+    Brief: funcion que actualiza el volumen de la musica
+    """
     def actualizar_volumen(self, mouse_x):
         if self.ancho // 4 <= mouse_x <= (self.ancho // 4 + self.ancho // 2):
             self.volumen = ((mouse_x - self.ancho // 4) / (self.ancho // 2)) * 100
@@ -34,7 +41,7 @@ class AjustesMenu:
 
     def iniciar(self):
         while self.ajustes_activo:
-            self.ventana.fill((0, 0, 0))
+            self.ventana.fill("black")
             self.dibujar_boton("Ajustes", (self.ancho // 2, 100))
             self.dibujar_boton(f"Volumen: {int(self.volumen)}%", (self.ancho // 2, self.alto // 2 - 60))
             self.dibujar_slider(self.volumen)
@@ -53,7 +60,6 @@ class AjustesMenu:
                 if evento.type == pygame.MOUSEBUTTONUP:
                     self.arrastrando_slider = False
 
-       
                 if evento.type == pygame.MOUSEMOTION and self.arrastrando_slider:
                     self.actualizar_volumen(evento.pos[0])
 

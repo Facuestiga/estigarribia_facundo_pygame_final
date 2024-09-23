@@ -11,6 +11,11 @@ class Textbox:
         self.fuente = fuente
         self.text_surface = fuente.render(self.texto, True, (255, 255, 255))
 
+    """ 
+    Brief: funcion que se encarga de manejar los eventos en el textbox si esta activo
+    Param: eventos(lista de eventos)
+    Return: retorna el texto ingresado por el usuario
+    """
     def manejar_eventos(self, eventos):
         for evento in eventos:
             if evento.type == pygame.MOUSEBUTTONDOWN:
@@ -31,6 +36,9 @@ class Textbox:
                     self.text_surface = self.fuente.render(self.texto, True, (255, 255, 255))
         return None
 
+    """
+    Brief: funcion que dibuja el textbox en la pantalla
+    """
     def dibujar(self, pantalla):
         pantalla.blit(self.text_surface, (self.rect.x + 5, self.rect.y + 5))
         pygame.draw.rect(pantalla, self.color, self.rect, 2)

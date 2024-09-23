@@ -20,8 +20,8 @@ class Item():
     """
     def dibujar(self, ventana):
         self.rect = pygame.Rect(self.x, self.y, self.ancho, self.alto)
-        pygame.draw.rect(ventana, self.color, self.rect)
-        #ventana.blit(self.imagen, (self.x, self.y))
+        #pygame.draw.rect(ventana, self.color, self.rect)
+        ventana.blit(self.imagen, (self.x, self.y))
     
     """ 
     Brief: funcion que incrementa el valor del eje y del item en funcion de la velocidad
