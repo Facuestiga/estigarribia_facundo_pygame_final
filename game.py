@@ -6,6 +6,7 @@ from item import Item
 from jefe import Jefe
 from pausa_menu import PausaMenu
 from puntuaciones import Puntuaciones
+from textbox import Textbox
 from constants import *
 import random
 
@@ -260,8 +261,25 @@ class Game():
     
    
     def game_over(self):
-        nombre = self.obtener_nombre_jugador()
-        Puntuaciones.guardar_puntuacion(nombre, self.puntos)
+        textbox = Textbox(350, 320, 300, 50, FUENTE)
+        ingreso_nombre = True
+        while ingreso_nombre:
+            eventos = pygame.event.get()
+            for evento in eventos:
+                if evento.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+                    
+            
+            nombre = textbox.manejar_eventos(eventos)
+            if nombre is not None:
+                Puntuaciones.guardar_puntuacion(nombre, self.puntos)
+                ingreso_nombre = False
+            VENTANA.fill("black")
+            textbox.dibujar(VENTANA)
+            mensaje = FUENTE.render("Ingrese su nombre: ", True, "white")
+            VENTANA.blit(mensaje, (350, 250))
+            pygame.display.flip()
         self.jugando = False
         self.mostrar_menu_principal()
 
