@@ -1,9 +1,12 @@
 import pygame
+import sys
 from personaje import Player
 from enemigo import Enemigo
+from item import Item
 from jefe import Jefe
 from pausa_menu import PausaMenu
 from puntuaciones import Puntuaciones
+from textbox import Textbox
 from constants import *
 import random
 
@@ -28,12 +31,13 @@ class Game():
         self.ultima_bala = 0
         self.tiempo_entre_balas = 250
         self.balas_enemigas = []
-        self.jefe = None #jefe del nivel actual
+        self.jefe = None 
         self.jefe_derrotado = False
         self.balas_enemigas_jefe = []
+        self.items = []
+        self.tiempo_entre_items = 1000
         self.suma_puntos = True
-        self.volumen = 0.5  # volumen inicial
-        pygame.mixer.music.set_volume(self.volumen) 
+
 
 
     def gestionar_teclas(self, teclas):
@@ -82,6 +86,13 @@ class Game():
         enemigo_x = random.randint(0, ANCHO - 50)
         self.enemigos.append(Enemigo(enemigo_x, -100))
         self.tiempo_pasado = 50
+        
+    def spawn_item(self):
+        item_x = random.randint(0, ANCHO - 20)
+        self.items.append(Item(item_x, -100))
+        self.tiempo_pasado = 0
+        
+        
 
     """
     Brief: function que actualiza para el juego esta corriendo.
@@ -162,6 +173,20 @@ class Game():
                 self.balas_enemigas.remove(bala_enemiga)
                 if self.vida > 0: 
                     SONIDO_COLISION_BALA_ENEMIGA_PLAYER.play()
+    
+    
+        for item in self.items:
+            item.dibujar(VENTANA)
+            item.movimiento()
+            
+            if item.y > ALTO:
+                self.items.remove(item)
+
+            if pygame.Rect.colliderect(self.player.rect, item.rect):
+                self.vida += 1
+                self.items.remove(item)
+                
+                
         
         texto_vida = FUENTE.render(f"Vidas: {self.vida}", True, "white")
         texto_puntos = FUENTE.render(f"Puntos: {self.puntos}", True, "white")
@@ -181,6 +206,10 @@ class Game():
             
             if self.tiempo_pasado > self.tiempo_entre_enemigos:
                 self.spawn_enemigo()
+            
+            if self.nivel in [2, 3]:  
+                if self.tiempo_pasado > self.tiempo_entre_items:
+                    self.spawn_item()
 
             eventos = pygame.event.get()
             teclas = pygame.key.get_pressed()
@@ -232,8 +261,25 @@ class Game():
     
    
     def game_over(self):
-        nombre = self.obtener_nombre_jugador()
-        Puntuaciones.guardar_puntuacion(nombre, self.puntos)
+        textbox = Textbox(350, 320, 300, 50, FUENTE)
+        ingreso_nombre = True
+        while ingreso_nombre:
+            eventos = pygame.event.get()
+            for evento in eventos:
+                if evento.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+                    
+            
+            nombre = textbox.manejar_eventos(eventos)
+            if nombre is not None:
+                Puntuaciones.guardar_puntuacion(nombre, self.puntos)
+                ingreso_nombre = False
+            VENTANA.fill("black")
+            textbox.dibujar(VENTANA)
+            mensaje = FUENTE.render("Ingrese su nombre: ", True, "white")
+            VENTANA.blit(mensaje, (350, 250))
+            pygame.display.flip()
         self.jugando = False
         self.mostrar_menu_principal()
 

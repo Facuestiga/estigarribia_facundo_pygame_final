@@ -7,18 +7,22 @@ class Jefe():
     def __init__(self, x, y, vida, velocidad_x=5):
         self.x = x
         self.y = y
-        self.ancho = 50
-        self.alto = 50
+        self.ancho = 150
+        self.alto = 120
         self.vida = vida  
         self.velocidad_x = velocidad_x
         self.color = "violet"
         self.rect = pygame.Rect(self.x, self.y, self.ancho, self.alto)
+        self.imagen = pygame.image.load(r"assets\enemy\boss\monstruo.png")
+        self.imagen = pygame.transform.scale(self.imagen, (self.ancho, self.alto))
+        self.imagen = self.imagen.convert_alpha()
         self.ultima_bala = pygame.time.get_ticks()
-        self.tiempo_entre_balas = random.randint(1000, 3000)
+        self.tiempo_entre_balas = random.randint(800, 1500)
 
     def dibujar(self, ventana):
         self.rect = pygame.Rect(self.x, self.y, self.ancho, self.alto)
-        pygame.draw.rect(ventana, self.color, self.rect)
+        #pygame.draw.rect(ventana, self.color, self.rect)
+        ventana.blit(self.imagen, (self.x, self.y))
         
     def movimiento(self):
         
