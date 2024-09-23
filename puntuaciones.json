@@ -14,5 +14,9 @@
     {
         "nombre": "lala",
         "puntos": 2
+    },
+    {
+        "nombre": "layla",
+        "puntos": 15
     }
 ]
