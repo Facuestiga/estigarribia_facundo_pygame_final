@@ -217,6 +217,10 @@ class Game():
             self.tiempo_pasado += tiempo_transcurrido
             self.tiempo_pasado_items  += tiempo_transcurrido
           
+            if self.nivel == 2:
+                self.tiempo_entre_enemigos = 400  
+            elif self.nivel == 3:
+                self.tiempo_entre_enemigos = 370
             
             if self.tiempo_pasado > self.tiempo_entre_enemigos:
                 self.spawn_enemigo()
