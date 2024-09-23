@@ -35,20 +35,30 @@ class Game():
         self.jefe_derrotado = False
         self.balas_enemigas_jefe = []
         self.items = []
-        self.tiempo_entre_items = 1000
+        self.tiempo_pasado_items = 0
+        self.tiempo_entre_items = 10000
         self.suma_puntos = True
 
 
-
+    """ 
+    Brief: funcion que se encarga de gestionar las teclas presionadas durante la partida
+    Param: teclas(lista de teclas presionadas)
+    """
     def gestionar_teclas(self, teclas):
         self.ultima_bala = self.player.movimiento(teclas, ANCHO, self.balas, self.ultima_bala, self.tiempo_entre_balas)
         if teclas[pygame.K_p]:
             self.mostrar_pausa()
 
+    """
+    Brief: funcion que muestra el menu de pausa al presionar la teclas 'P'
+    """
     def mostrar_pausa(self):
         pausa_menu = PausaMenu(VENTANA, ANCHO, ALTO)
         pausa_menu.iniciar(self)
     
+    """
+    Brief: funcion que muestra el menu principal
+    """
     def mostrar_menu_principal(self):
         from main_menu import MainMenu
         menu_principal = MainMenu(VENTANA,ANCHO, ALTO) 
@@ -85,12 +95,12 @@ class Game():
     def spawn_enemigo(self):
         enemigo_x = random.randint(0, ANCHO - 50)
         self.enemigos.append(Enemigo(enemigo_x, -100))
-        self.tiempo_pasado = 50
+        self.tiempo_pasado = 0
         
     def spawn_item(self):
         item_x = random.randint(0, ANCHO - 20)
         self.items.append(Item(item_x, -100))
-        self.tiempo_pasado = 0
+        self.tiempo_pasado_items = 0
         
         
 
@@ -183,7 +193,8 @@ class Game():
                 self.items.remove(item)
 
             if pygame.Rect.colliderect(self.player.rect, item.rect):
-                self.vida += 1
+                if self.vida != 3:
+                    self.vida += 1
                 self.items.remove(item)
                 
                 
@@ -202,13 +213,16 @@ class Game():
     """
     def run(self):
         while self.jugando and self.vida > 0:
-            self.tiempo_pasado += self.reloj.tick(FPS)
+            tiempo_transcurrido = self.reloj.tick(FPS)
+            self.tiempo_pasado += tiempo_transcurrido
+            self.tiempo_pasado_items  += tiempo_transcurrido
+          
             
             if self.tiempo_pasado > self.tiempo_entre_enemigos:
                 self.spawn_enemigo()
             
             if self.nivel in [2, 3]:  
-                if self.tiempo_pasado > self.tiempo_entre_items:
+                if self.tiempo_pasado_items > self.tiempo_entre_items:
                     self.spawn_item()
 
             eventos = pygame.event.get()
@@ -253,11 +267,6 @@ class Game():
         self.suma_puntos = True
 
         SONIDO_GAME_OVER.stop()
-
-
-    def obtener_nombre_jugador(self):
-        nombre = input("Ingresa tu nombre: ")
-        return nombre
     
    
     def game_over(self):

@@ -22,6 +22,10 @@ class PausaMenu:
         self.ventana.blit(texto_render, texto_rect)
         return texto_rect
 
+    """
+    Brief: funcion que inicia el menu de pausa.
+    Param: el juego donde se muestra el menu
+    """
     def iniciar(self, game):
         while True:
             self.ventana.fill((0, 0, 0))

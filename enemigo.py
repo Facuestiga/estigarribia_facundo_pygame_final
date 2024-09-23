@@ -15,7 +15,7 @@ class Enemigo():
         self.imagen = pygame.transform.scale(self.imagen, (self.ancho, self.alto))
         self.imagen = self.imagen.convert_alpha()
         self.ultima_bala = pygame.time.get_ticks()
-        self.tiempo_entre_balas = random.randint(1000, 3000)
+        self.tiempo_entre_balas = random.randint(750, 1750)
     
     """ 
     Brief: funcion que dibuja al enemigo en la pantalla,
