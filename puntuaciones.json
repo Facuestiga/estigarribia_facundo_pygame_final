@@ -22,5 +22,17 @@
     {
         "nombre": "asda",
         "puntos": 16
+    },
+    {
+        "nombre": "gfdg",
+        "puntos": 7
+    },
+    {
+        "nombre": "& C:/Python311/python.exe c:/Users/Facu/Desktop/pygame_space_invaders/main.py",
+        "puntos": 8
+    },
+    {
+        "nombre": "lksda",
+        "puntos": 7
     }
 ]
